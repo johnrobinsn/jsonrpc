@@ -28,30 +28,30 @@ jsonRPC = function(u) {
     this.websocket.onmessage = function(e) {
         var o = JSON.parse(e.data);
         if (o) {
-		    if (o.id != null) {
-		        var f = self.outstanding[o.id];
+            if (o.id != null) {
+                var f = self.outstanding[o.id];
                 if (f) {
                     f(o.error, o.result);
                     delete self.outstanding[o.id];
                 }
             }
-	    	else {
-	    	    if (self.onNotification)
-	    			self.onNotification(o.method, o.params);
-	    	}
-	    }
+            else {
+                if (self.onNotification)
+                    self.onNotification(o.method, o.params);
+            }
+        }
     }
     
     this.call = function(m, p, f) {
-		var id = self.id++;
-		var o = {
-        method: m,
-	    	id: id,
-	    	params: p};
-		if (f) {
-		    self.outstanding[id] = f;
-		}
-		self.websocket.send(JSON.stringify(o));
+        var id = self.id++;
+        var o = {
+            method: m,
+            id: id,
+            params: p};
+        if (f) {
+            self.outstanding[id] = f;
+        }
+        self.websocket.send(JSON.stringify(o));
     }
     
     return this;
