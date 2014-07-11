@@ -1,4 +1,5 @@
 // John Robinson (c) 2009-2014
+// https://github.com/johnrobinsn/jsonrpc
 // JSON RPC Over Websockets
 // MIT License
 
